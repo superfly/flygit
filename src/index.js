@@ -36,11 +36,32 @@ fly.http.route("/:username/:repo/*path", function fileHandler(req, route) {
   }
 })
 
+/*
+ * Static file handling in Fly Apps relies is a little odd. There's no file system available
+ * when this Javascript is executed, so we bundle statis assets using
+ * [Webpack](/webpack.config.js). This is similar to the asset compilation steps in most
+ * web frameworks.
+ *
+ * Webpack loads and processes scss files like
+ * [index.scss](/src/stylesheets/index.scss) into string constants.
+ * We add routes for each of `/screen.css`, and the necessary font files.
+ */
+const css = require('./stylesheets/rawgit.css').toString()
+fly.http.route("/css/rawgit.css", function(req, params) {
+  return new Response(css, {
+    headers: {
+      'content-type': 'text/css'
+    }
+  })
+})
+
 fly.http.respondWith(async (req) => {
   return new Response("Hello! We only support whirled peas.", {
     status: 404
   })
 })
+
+
 
 async function fetchFile(username, repoName, filePath) {
   const url = `${baseRepoUrl}/${username}/${repoName}/${filePath}`
