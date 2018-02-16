@@ -55,6 +55,34 @@ fly.http.route("/css/rawgit.css", function(req, params) {
   })
 })
 
+/*
+ * There are a couple of different images in this project, so we can create a
+ * parameterized route to handle all of them.
+ */
+fly.http.route("/img/:filename(^\\w+).:format", function staticImage(req, route) {
+  const params = route.params
+  const format = params.format
+  const mimeType = format === 'ico' ? "image/x-icon" : `image/${format}`
+  try {
+    /*
+     * Webpack is smart. It recognizes that we might need every image in `/images`/,
+     * so it helpfully bundles all of them up for runtime require calls.
+     */
+    console.log("Params: ", params)
+    console.log(`Grabbing ./images/${params.filename}.${params.format}`)
+    const img = require(`./images/${params.filename}.${params.format}`)
+    return new Response(img, {
+      'content-type': mimeType
+    })
+  } catch (e) {
+    console.log("ERROR: ", e)
+    return new Response("not found", {
+      status: 404
+    })
+  }
+})
+
+
 fly.http.respondWith(async (req) => {
   return new Response("Hello! We only support whirled peas.", {
     status: 404

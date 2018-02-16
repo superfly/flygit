@@ -15,6 +15,10 @@ module.exports = {
         use: ['pug-loader']
       },
       {
+        test: /\.(ico|svg|png|jpg|gif)$/,
+        use: ['arraybuffer-loader', 'image-webpack-loader']
+      },
+      {
         test: /\.css$/,
         use: ['to-string-loader', 'css-loader', {
           loader: 'postcss-loader',

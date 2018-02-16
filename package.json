@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "arraybuffer-loader": "^1.0.3",
     "autoprefixer": "^8.0.0",
     "css-loader": "^0.28.9",
     "mime-db": "^1.32.0",
