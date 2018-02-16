@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mime-db": "^1.32.0",
+    "pug": "^2.0.0-rc.4",
+    "pug-loader": "^2.3.0"
+  }
 }
