@@ -38,12 +38,14 @@ fly.http.route("/:username/:repo/*path", function fileHandler(req, route) {
  * [index.scss](/src/stylesheets/index.scss) into string constants.
  * We add routes for each of `/screen.css`, and the necessary font files.
  */
-fly.http.route("/css/:filename(^\\w+).css", function(req, route) {
+fly.http.route("/css/flygit.css", function(req, route) {
   const params = route.params
   try {
-    const css = require(`./stylesheets/${params.filename}.css`).toString()
+    const css = require("./stylesheets/flygit.css").toString()
     return new Response(css, {
-      'content-type': 'text/css'
+      headers: {
+        'content-type': 'text/css'
+      }
     })
   } catch (e) {
     console.log("CSS ERROR: ", e)
@@ -68,7 +70,9 @@ fly.http.route("/img/:filename(^\\w+).:format", function staticImage(req, route)
      */
     const img = require(`./images/${params.filename}.${params.format}`)
     return new Response(img, {
-      'content-type': mimeType
+      headers: {
+        'content-type': mimeType
+      }
     })
   } catch (e) {
     console.log("IMAGE ERROR: ", e)
@@ -92,7 +96,8 @@ async function fetchFile(username, repoName, filePath) {
   return await fetch(url)
 }
 
-function pathWithIndex(path) {
+function pathWithIndex(req) {
+  const path = new URL(req.url).pathname
   if (/\/$/.test(path)) {
     path += 'index.html';
   }
