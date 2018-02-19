@@ -3,9 +3,15 @@ const mime = require('./mime')
 const baseRepoUrl = 'https://raw.githubusercontent.com'
 const REGEX_CHARSET = /;\s*charset\s*=\s*([^\s;]+)/i
 
+const devDomain = 'dev.flygit.fly.io'
+const cdnDomain = 'flygit.fly.io'
+
 fly.http.route("/", function fileHandler(req, route) {
   const pageTpl = require('./views/index.pug')
-  const body = pageTpl({})
+  const body = pageTpl({
+    devDomain: devDomain,
+    cdnDomain: cdnDomain
+  })
   return new Response(body, {
     headers: {
       'content-type': 'text/html'
