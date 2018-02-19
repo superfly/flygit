@@ -69,8 +69,9 @@ fly.http.route("/img/:filename(^\\w+).:format", function staticImage(req, route)
      * so it helpfully bundles all of them up for runtime require calls.
      */
     console.log("Params: ", params)
-    console.log(`Grabbing ./images/${params.filename}.${params.format}`)
-    const img = require(`./images/${params.filename}.${params.format}`)
+    const imgPath = `./stylesheets/${params.filename}.${params.format}`
+    console.log(`Grabbing ${imgPath}`)
+    const img = require(imgPath)
     return new Response(img, {
       'content-type': mimeType
     })

@@ -7,7 +7,7 @@ module.exports = {
   },
   output: {
     filename: 'flygit.js',
-    path: __dirname + '/dist'
+    path: __dirname
   },
   module: {
     rules: [{
@@ -16,7 +16,7 @@ module.exports = {
       },
       {
         test: /\.(ico|svg|png|jpg|gif)$/,
-        use: ['arraybuffer-loader', 'image-webpack-loader']
+        use: ['arraybuffer-loader'], //, 'image-webpack-loader']
       },
       {
         test: /\.css$/,

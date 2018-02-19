@@ -33,14 +33,14 @@ html
           img.logo(src="/img/sushi.png" alt="" role="presentation")
         | FlyGit
 
-    nav.nav
-      ul
-        li
-          a(href="/") Home
-        li
-          a(href="https://github.com/rgrove/rawgit/blob/master/FAQ.md") FAQ
-        li
-          a(href="https://github.com/rgrove/rawgit") Source
+      nav.nav
+        ul
+          li
+            a(href="/") Home
+          li
+            a(href="https://github.com/rgrove/rawgit/blob/master/FAQ.md") FAQ
+          li
+            a(href="https://github.com/rgrove/rawgit") Source
 
     .bd
       .content
@@ -49,12 +49,24 @@ html
     footer.ft
       p
         | &copy; 2017
+        |
         a(href="http://wonko.com/") Ryan Grove
-        |  Follow
+        | . Follow
+        |
         a(href="https://twitter.com/rawgit") @rawgit
         |  on Twitter for news and status updates.
         br
         a(href="http://thenounproject.com/noun/sushi/#icon-No14497") Sushi icon
         |  designed by
+        | 
         a(href="http://thenounproject.com/lnakanishi") Linda Yuki Nakanishi
         |  from The Noun Project.
+
+    script.
+      var cdnDomain = 'flygit.woo.sh';
+
+    script(src="https://cdn.rawgit.com/cdnjs/cdnjs/0971b44/ajax/libs/fetch/2.0.1/fetch.min.js")
+    script(src="https://cdn.rawgit.com/zenorocha/document.queryCommandSupported/v1.0.0/dist/queryCommandSupported.min.js")
+    script(src="https://cdn.rawgit.com/zenorocha/clipboard.js/v1.5.10/dist/clipboard.min.js")
+    script(src="https://cdn.rawgit.com/rgrove/rawgit/master/public/js/url-formatter.js")
+

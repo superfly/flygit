@@ -4,6 +4,7 @@ block content
   p.hero
     strong FlyGit
     |  serves raw files directly from GitHub with proper
+    |
     strong Content-Type
     |  headers.
 
@@ -11,7 +12,8 @@ block content
     .url-paste
       p#url-form
         label.offscreen(for="url") GitHub URL:
-        input#url.url(type="url" value="{{url}}" placeholder="Paste a GitHub file or gist URL here." autofocus tabindex="1")
+        //- value="{{url}}"
+        input#url.url(type="url" placeholder="Paste a GitHub file or gist URL here." autofocus tabindex="1")
 
   .column
     h2
@@ -20,7 +22,7 @@ block content
         |  production
 
     .url-container
-      input#url-prod.url(placeholder="https://{{config.cdnDomain}}/user/repo/tag/file" readonly tabindex="2")
+      input#url-prod.url(placeholder="https://flygit.woo.sh/user/repo/tag/file" readonly tabindex="2")
       button#url-prod-copy.url-copy-button(data-clipboard-target="#url-prod" title="Copy URL" disabled)
       img(src="/img/clippy.svg" alt="")
 
@@ -28,6 +30,7 @@ block content
       li
         p
           |  No traffic limits or throttling. Files are served via
+          |
           a(href="https://fly.io/") Fly.io
           | 's super fast global CDN.
       li
