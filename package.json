@@ -1,14 +1,16 @@
 {
   "name": "flygit",
   "version": "0.0.1",
-  "description": "",
+  "description": "rawgit.com as Fly Edge App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "fly test",
+    "start": "fly server"
   },
-  "author": "",
+  "author": "mbyczkowski@gmail.com",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
+    "@fly/fly": "^0.16.6",
     "arraybuffer-loader": "^1.0.3",
     "autoprefixer": "^8.0.0",
     "css-loader": "^0.28.9",
