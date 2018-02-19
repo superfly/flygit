@@ -18,18 +18,10 @@ fly.http.route("/:username/:repo/*path", function fileHandler(req, route) {
   return async () => {
     const response = await fetchFile(params.username, params.repo, params['*'])
 
-    console.log(response)
-    console.log(response.status)
-    console.log(response.headers)
     const contentType = response.headers.get('content-type')
-    console.log("content-type: ", contentType)
     // Choose an appropriate Content-Type, preserving the charset specified in
     // the response if there was one.
     let charset = REGEX_CHARSET.exec(contentType)
-    console.log("charset: ", charset[1])
-    console.log("new filepath: ", pathWithIndex(req))
-    console.log("new filepath: ", route)
-    console.log("new content-type: ", mime.contentType(pathWithIndex(req), charset && charset[1]))
     response.headers.set('Content-Type', mime.contentType(pathWithIndex(req), charset && charset[1]));
 
     return response
@@ -68,15 +60,12 @@ fly.http.route("/img/:filename(^\\w+).:format", function staticImage(req, route)
      * Webpack is smart. It recognizes that we might need every image in `/images`/,
      * so it helpfully bundles all of them up for runtime require calls.
      */
-    console.log("Params: ", params)
-    const imgPath = `./stylesheets/${params.filename}.${params.format}`
-    console.log(`Grabbing ${imgPath}`)
-    const img = require(imgPath)
+    const img = require(`./images/${params.filename}.${params.format}`)
     return new Response(img, {
       'content-type': mimeType
     })
   } catch (e) {
-    console.log("ERROR: ", e)
+    console.log("IMAGE ERROR: ", e)
     return new Response("not found", {
       status: 404
     })
