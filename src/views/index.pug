@@ -21,7 +21,7 @@ block content
         strong
           |  production
 
-      .url-container
+      p.url-container
         - url = "https://" + cdnDomain + "/user/repo/tag/file"
         input#url-prod.url(placeholder=url readonly tabindex="2")
         button#url-prod-copy.url-copy-button(data-clipboard-target="#url-prod" title="Copy URL" disabled)
@@ -47,7 +47,7 @@ block content
         strong
           |  development
 
-      .url-container
+      p.url-container
         - url = "https://" + devDomain + "/user/repo/tag/file"
         input#url-dev.url(placeholder=url readonly tabindex="2")
         button#url-dev-copy.url-copy-button(data-clipboard-target="#url-dev" title="Copy URL" disabled)

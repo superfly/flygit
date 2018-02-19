@@ -66,18 +66,17 @@ fly.http.route("/css/flygit.css", function(req, route) {
  * parameterized route to handle all of them.
  */
 fly.http.route("/img/:filename(^\\w+).:format", function staticImage(req, route) {
-  const params = route.params
-  const format = params.format
-  const mimeType = format === 'ico' ? "image/x-icon" : `image/${format}`
   try {
     /*
      * Webpack is smart. It recognizes that we might need every image in `/images`/,
      * so it helpfully bundles all of them up for runtime require calls.
      */
+    const params = route.params
+    const format = params.format
     const img = require(`./images/${params.filename}.${params.format}`)
     return new Response(img, {
       headers: {
-        'content-type': mimeType
+        'content-type': contentTypeForRequest(req)
       }
     })
   } catch (e) {
@@ -109,4 +108,8 @@ function pathWithIndex(req) {
   }
 
   return path;
+}
+
+function contentTypeForRequest(req) {
+  return mime.contentType(pathWithIndex(req))
 }
