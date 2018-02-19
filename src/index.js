@@ -38,13 +38,19 @@ fly.http.route("/:username/:repo/*path", function fileHandler(req, route) {
  * [index.scss](/src/stylesheets/index.scss) into string constants.
  * We add routes for each of `/screen.css`, and the necessary font files.
  */
-const css = require('./stylesheets/rawgit.css').toString()
-fly.http.route("/css/rawgit.css", function(req, params) {
-  return new Response(css, {
-    headers: {
+fly.http.route("/css/:filename(^\\w+).css", function(req, route) {
+  const params = route.params
+  try {
+    const css = require(`./stylesheets/${params.filename}.css`).toString()
+    return new Response(css, {
       'content-type': 'text/css'
-    }
-  })
+    })
+  } catch (e) {
+    console.log("CSS ERROR: ", e)
+    return new Response("not found", {
+      status: 404
+    })
+  }
 })
 
 /*
