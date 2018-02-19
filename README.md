@@ -1,8 +1,8 @@
 # FlyGit
 
-This is the source code https://flygit.fly.io/>.
+This is the source code behind https://flygit.fly.io/>.
 
-FlyGit a port of [RawGit](https://rawgit.com/) that runs on [Fly Edge Apps](fly.io/mix/edge-applications/).
+FlyGit a port of [RawGit](https://rawgit.com/) that runs on [Fly Edge Apps](fly.io/mix/edge-applications/). All original code was writen by [Ryan Wonko](https://github.com/rgrove) and [contributors](https://github.com/rgrove/rawgit/graphs/contributors).
 
 ## Installing
 
