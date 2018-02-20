@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+- '8'
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-5
+    - g++-5
+before_install:
+- set -e
+- export CXX="g++-5"
+install:
+- npm install
+script:
+- npm test
+after_success:
+- fly deploy
+env:
+  global:
+    secure: mBSneppIqd9TkUxnv9oKM05FNyqRK26oa8vahsLCO+aJWh1Wsecs3h0nnYji+zbpEw+vM/QEPlSMUNag5KVMachSu1U9xum2Vtws6QELBqqai4LnZ55IF55SnSryGYAAHNK2PbN9cicln0IVwuQ9DDXJ/is3R99DRXnY6BUBLHMtm5QgVfEjbnggFaT+srN1b52jrC5mGcdCPzhsV37rTtxO8IdwAKLJQsYQbeKEFFfb6CDzrMeBjJFGt1WGQxW0ZYqLxLuJjQOCj3XrUnO4rpMPG5nCeew2C4Gg5YXDo1c2SfvPsaV11rhJO6PR9CrBq7ccJ6MiCweMGBR0kQbi3cBeClK8v0bXgg0lkciYg7vqKOqdjMIJUF/Buyi81uiN+/F3Nqg248hhIa4kqh30ABUrB8q838uWzIDHa30duJ2pa37nuSTJ+Mw3jqwnrsuwhndGPdvw/vFNoa2nPiriom6mSEVJP8lybibd033SVOi6pm/csno0cmMtnFqYVEUzY2VImnvVgT1ViK3h09teLHSgaxKH6Y6hJTnMNnyZmfedLkbXTC2YtBRYWtMaA9vPNkzAuEUWz/KuXVjXfhyEYvfrkLXVljCdf7BCHlDCcB5I2f/Be4AbMBe9Lgq9xLVa+eb6hfUug001dJ1aU8vNA7xiMptpjn8SHE7yXjbJGO4=
