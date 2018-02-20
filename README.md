@@ -60,14 +60,14 @@ run it as your own on Fly's global edge infrastructure in a few simple steps:
 fly login
 
 # create your app on Fly
-fly apps create my-flygit-app
+# get your org name from `fly orgs`
+fly apps create my-org/my-flygit-app
 ```
 
 3. Create `.fly.yml` file:
 
 ```
 # .fly.yml
-# you can get my-org from `fly orgs`
 
 app_id: my-org/my-flygit-app
 ```
