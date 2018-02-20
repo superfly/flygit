@@ -44,7 +44,7 @@ Checkout [Fly Edge Apps](https://fly.io/docs/apps/) for basic concepts, examples
 
 Want to fix a bug? If it's something small, just send us a pull request. If you
 want to add a new feature or make significant changes, please get in touch and
-ask (opening a issue is :+1:) before doing the work.
+ask (opening an issue is :+1:) before doing the work.
 
 ## Deploying
 
@@ -67,7 +67,7 @@ fly apps create my-flygit-app
 
 ```
 # .fly.yml
-# you can get _my-org_ from `fly orgs`
+# you can get my-org from `fly orgs`
 
 app_id: my-org/my-flygit-app
 ```
@@ -79,7 +79,7 @@ fly hostnames add my-fly-git-app.hostname.com
 ```
 
 5. Go to your DNS provider and add a CNAME for _my-fly-git-app.hostname.com_ to
-point to **beta.edge.fly.io
+point to **beta.edge.fly.io**
 
 
 
