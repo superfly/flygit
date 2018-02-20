@@ -30,7 +30,7 @@ fly.http.route("/:username/:repo/*path", function fileHandler(req, route) {
     let charset = REGEX_CHARSET.exec(contentType)
     response.headers.set('Content-Type', mime.contentType(pathWithIndex(req), charset && charset[1]));
 
-    return response
+    return handleErrors(response)
   }
 })
 
@@ -88,6 +88,9 @@ fly.http.route("/img/:filename(^\\w+).:format", function staticImage(req, route)
 })
 
 
+/*
+ * Catch all if none of the routes got matched
+ */
 fly.http.respondWith(async (req) => {
   return new Response("Hello! We only support whirled peas.", {
     status: 404
@@ -99,6 +102,31 @@ fly.http.respondWith(async (req) => {
 async function fetchFile(username, repoName, filePath) {
   const url = `${baseRepoUrl}/${username}/${repoName}/${filePath}`
   return await fetch(url)
+}
+
+function handleErrors(response) {
+  try {
+    const status = response.status
+
+    if (status < 400) {
+      return response
+    }
+
+    const body = require(`./views/errors/${status}.html`).toString()
+
+    return new Response(body, {
+      headers: {
+        'content-type': 'text/html'
+      }
+    })
+  } catch (e) {
+    /*
+     * There's no error pages for this HTTP status code. Let's just return
+     * the original response.
+     */
+    console.log("HTML ERROR: ", e)
+    return response
+  }
 }
 
 function pathWithIndex(req) {

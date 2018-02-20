@@ -15,8 +15,12 @@ module.exports = {
         use: ['pug-loader']
       },
       {
+        test: /\.html$/,
+        use: ['html-loader'],
+      },
+      {
         test: /\.(ico|svg|png|jpg|gif)$/,
-        use: ['arraybuffer-loader'], //, 'image-webpack-loader']
+        use: ['arraybuffer-loader'],
       },
       {
         test: /\.css$/,
