@@ -15,7 +15,7 @@ install:
 - npm install
 script:
 - npm test
-after_success
+after_success:
 - ./scripts/deploy.sh
 env:
   global:
