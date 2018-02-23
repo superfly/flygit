@@ -49,7 +49,7 @@ Object.keys(db).forEach(type => {
 })
 
 
-export function contentType(filePath, forceCharset) {
+export default function getContentTypeFor(filePath, forceCharset) {
   let ext = filePath.match(/.\.([^.]+?)$/)
   let type = (ext && extensions[ext[1].toLowerCase()]) || 'application/octet-stream'
   let charset = forceCharset || db[type].charset

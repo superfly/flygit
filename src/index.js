@@ -1,16 +1,13 @@
-const mime = require('./mime')
+import getContentTypeFor from './mime'
+import conf from './conf'
 
-const baseRepoUrl = 'https://raw.githubusercontent.com'
 const REGEX_CHARSET = /;\s*charset\s*=\s*([^\s;]+)/i
-
-const devDomain = 'dev.flygit.fly.io'
-const cdnDomain = 'flygit.fly.io'
 
 fly.http.route("/", function fileHandler(req, route) {
   const pageTpl = require('./views/index.pug')
   const body = pageTpl({
-    devDomain: devDomain,
-    cdnDomain: cdnDomain
+    devDomain: conf.devDomain,
+    cdnDomain: conf.cdnDomain
   })
   return new Response(body, {
     headers: {
@@ -19,19 +16,18 @@ fly.http.route("/", function fileHandler(req, route) {
   })
 })
 
-fly.http.route("/:username/:repo/*path", function fileHandler(req, route) {
+// Gist
+fly.http.route("/:username/:gistid([0-9a-f]{1,100})/raw/*path", function gistHandler(req, route) {
   const params = route.params
-  return async () => {
-    const response = await fetchFile(params.username, params.repo, params['*'])
+  const url = `${conf.baseGistUrl}/${params.username}/${params.gistid}/raw/${params['*']}`
+  return fetchFile(req, url)
+})
 
-    const contentType = response.headers.get('content-type')
-    // Choose an appropriate Content-Type, preserving the charset specified in
-    // the response if there was one.
-    let charset = REGEX_CHARSET.exec(contentType)
-    response.headers.set('Content-Type', mime.contentType(pathWithIndex(req), charset && charset[1]));
-
-    return handleErrors(response)
-  }
+// Repo file
+fly.http.route("/:username/:repo/*path", function repoHandler(req, route) {
+  const params = route.params
+  const url = `${conf.baseRepoUrl}/${params.username}/${params.repo}/${params['*']}`
+  return fetchFile(req, url)
 })
 
 /*
@@ -97,11 +93,16 @@ fly.http.respondWith(async (req) => {
   })
 })
 
+async function fetchFile(req, url) {
+  const response = await fetch(url)
 
+  const contentType = response.headers.get('content-type')
+  // Choose an appropriate Content-Type, preserving the charset specified in
+  // the response if there was one.
+  let charset = REGEX_CHARSET.exec(contentType)
+  response.headers.set('Content-Type', getContentTypeFor(pathWithIndex(req), charset && charset[1]));
 
-async function fetchFile(username, repoName, filePath) {
-  const url = `${baseRepoUrl}/${username}/${repoName}/${filePath}`
-  return await fetch(url)
+  return handleErrors(response)
 }
 
 function handleErrors(response) {
@@ -139,5 +140,5 @@ function pathWithIndex(req) {
 }
 
 function contentTypeForRequest(req) {
-  return mime.contentType(pathWithIndex(req))
+  return getContentTypeFor(pathWithIndex(req))
 }
