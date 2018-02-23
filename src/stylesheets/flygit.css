@@ -1,6 +1,8 @@
 html {
-  background: #fff;
-  color: #333;
+  background: rgba(15, 34, 84, 1.0);
+  /* background-image: url('/img/background.png'); */
+  background-size: cover;
+  color: #fff;
 }
 
 html, button, input, select, textarea {
@@ -13,8 +15,8 @@ body {
 }
 
 a {
-  color: #0000ff;
-  text-decoration: none;
+  color: white;
+  text-decoration: underline;
 }
 
 a:hover { text-decoration: underline; }
@@ -136,11 +138,12 @@ pre { overflow-x: auto; }
 }
 
 .url {
-  background: #fbfbfb;
-  border: 1px solid #dfdfdf;
+  /* background: #fbfbfb; */
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 3px;
   cursor: text;
-  padding-left: 6px;
-  padding-right: 6px;
+  padding: 6px;
   text-align: center;
   width: 100%;
 }
@@ -154,6 +157,10 @@ pre { overflow-x: auto; }
   border: 1px solid transparent;
   cursor: pointer;
   display: none;
+}
+
+.url-copy-button img {
+  fill: rgba(255, 255, 255, 0.5);
 }
 
 .url-copy-button:hover {

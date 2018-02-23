@@ -20,7 +20,7 @@ cd flygit && npm install
 
 4. Start the local server
 ```
-fly server
+npm start
 ```
 
 5. Browse to http://localhost:3000/ and you should see FlyGit in action.
@@ -80,6 +80,3 @@ fly hostnames add my-fly-git-app.hostname.com
 
 5. Go to your DNS provider and add a CNAME for _my-fly-git-app.hostname.com_ to
 point to **beta.edge.fly.io**
-
-
-
