@@ -26,24 +26,25 @@ html
       link(rel="stylesheet" type="text/css" href="/css/flygit.css")
 
   body
-    header.hd
-      h1.title
-        a(href="/")
-          img.logo(src="/img/sushi.png" alt="" role="presentation")
-        | FlyGit
+    main
+      header.hd
+        h1.title
+          a(href="/")
+            img.logo(src="/img/sushi.png" alt="" role="presentation")
+          | FlyGit
 
-      nav.nav
-        ul
-          li
-            a(href="/") Home
-          li
-            a(href="https://github.com/superfly/flygit/blob/master/FAQ.md") FAQ
-          li
-            a(href="https://github.com/superfly/flygit") Source
+        nav.nav
+          ul
+            li
+              a(href="/") Home
+            li
+              a(href="https://github.com/superfly/flygit/blob/master/FAQ.md") FAQ
+            li
+              a(href="https://github.com/superfly/flygit") Source
 
-    .bd
-      .content
-        block content
+      .bd
+        .content
+          block content
 
     footer.ft
       p
