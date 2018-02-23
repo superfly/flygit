@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$TRAVIS_BRANCH" == "master" ]; then
+if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]] then
   echo "On master branch, attempting to deploy to Fly..."
   fly deploy
   if [ $? != 0 ]; then
