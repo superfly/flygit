@@ -1,13 +1,12 @@
 import getContentTypeFor from './mime'
-import conf from './conf'
 
 const REGEX_CHARSET = /;\s*charset\s*=\s*([^\s;]+)/i
 
 fly.http.route("/", function fileHandler(req, route) {
   const pageTpl = require('./views/index.pug')
   const body = pageTpl({
-    devDomain: conf.devDomain,
-    cdnDomain: conf.cdnDomain
+    devDomain: app.config.devDomain,
+    cdnDomain: app.config.cdnDomain
   })
   return new Response(body, {
     headers: {
@@ -19,14 +18,14 @@ fly.http.route("/", function fileHandler(req, route) {
 // Gist
 fly.http.route("/:username/:gistid([0-9a-f]{1,100})/raw/*path", function gistHandler(req, route) {
   const params = route.params
-  const url = `${conf.baseGistUrl}/${params.username}/${params.gistid}/raw/${params['*']}`
+  const url = `${app.config.baseGistUrl}/${params.username}/${params.gistid}/raw/${params['*']}`
   return fetchFile(req, url)
 })
 
 // Repo file
 fly.http.route("/:username/:repo/*path", function repoHandler(req, route) {
   const params = route.params
-  const url = `${conf.baseRepoUrl}/${params.username}/${params.repo}/${params['*']}`
+  const url = `${app.config.baseRepoUrl}/${params.username}/${params.repo}/${params['*']}`
   return fetchFile(req, url)
 })
 
