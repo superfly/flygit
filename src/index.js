@@ -1,4 +1,5 @@
 import getContentTypeFor from './mime'
+import cacheResponse from './cache'
 
 const REGEX_CHARSET = /;\s*charset\s*=\s*([^\s;]+)/i
 
@@ -19,14 +20,14 @@ fly.http.route("/", function fileHandler(req, route) {
 fly.http.route("/:username/:gistid([0-9a-f]{1,100})/raw/*path", function gistHandler(req, route) {
   const params = route.params
   const url = `${app.config.baseGistUrl}/${params.username}/${params.gistid}/raw/${params['*']}`
-  return fetchFile(req, url)
+  return tryCache(req, url)
 })
 
 // Repo file
 fly.http.route("/:username/:repo/*path", function repoHandler(req, route) {
   const params = route.params
   const url = `${app.config.baseRepoUrl}/${params.username}/${params.repo}/${params['*']}`
-  return fetchFile(req, url)
+  return tryCache(req, url)
 })
 
 /*
@@ -92,6 +93,23 @@ fly.http.respondWith(async (req) => {
   })
 })
 
+async function tryCache(req, url) {
+  const reqUrl = new URL(req.url)
+
+  const shouldCache = `https://${reqUrl.hostname}` === app.config.cdnDomain
+
+  if (shouldCache) {
+    console.log(`On production domain (detected ${reqUrl.hostname}). Will cache`)
+    return cacheResponse(reqUrl.pathname, async () => {
+      return fetchFile(req, url)
+    })
+  }
+
+  console.log(`Not on production domain (detected ${reqUrl.hostname}). Will NOT cache`)
+
+  return fetchFile(req, url)
+}
+
 async function fetchFile(req, url) {
   const response = await fetch(url)
 
@@ -112,7 +130,9 @@ function handleErrors(response) {
       return response
     }
 
-    const body = require(`./views/errors/${status}.html`).toString()
+    const body = require(`. / views / errors / $ {
+          status
+        }.html `).toString()
 
     return new Response(body, {
       headers: {
